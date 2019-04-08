@@ -60,9 +60,10 @@ class Search extends Component {
                     </div>
                 </Row>
                 <Row>
-                    <Col>
+                    <div className="col border border-rounded p-4">
+                        <h4>Results</h4>
                         {!this.state.books.length ? (
-                            <h3>No books to display currently</h3>
+                            <h6 className="text-center">No books to display currently</h6>
                         ) : (
                             <BookList>
                                 {this.state.books.map(book => {
@@ -79,7 +80,7 @@ class Search extends Component {
                                 })}
                             </BookList>
                         )}
-                    </Col>
+                    </div>
                 </Row>
             </Container>
         )
