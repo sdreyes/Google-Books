@@ -30,6 +30,18 @@ class Search extends Component {
         });
     };
 
+    handleSave = (event, title, authors, description, href, thumbnail) => {
+        event.preventDefault();
+        API.saveBook({
+            title: title,
+            authors: authors,
+            description: description,
+            href: href,
+            thumbnail: thumbnail
+        })
+        .then(res => alert("Book saved"));
+    };
+
     render() {
         return (
             <Container>
@@ -50,7 +62,6 @@ class Search extends Component {
                                     className="form-control" 
                                     id="bookSearch" 
                                     name="bookSearch" 
-                                    placeholder="Harry Potter" 
                                     value={this.state.bookSearch} 
                                     onChange={this.handleInputChange} />
                             </div>
@@ -69,12 +80,14 @@ class Search extends Component {
                                 {this.state.books.map(book => {
                                     return (
                                         <BookListItem
-                                            key={book.volumeInfo.title}
+                                            key={book.volumeInfo.infoLink}
                                             title={book.volumeInfo.title}
-                                            authors={book.volumeInfo.authors[0]}
+                                            authors={Array.isArray(book.volumeInfo.authors) ? book.volumeInfo.authors : ["Unknown"]}
                                             description={book.volumeInfo.description}
                                             thumbnail={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.smallThumbnail : "https://placehold.it/128x197?text=No%20Preview"}
                                             href={book.volumeInfo.infoLink}
+                                            saved={false}
+                                            clickEvent={this.handleSave}
                                         />
                                     );
                                 })}
