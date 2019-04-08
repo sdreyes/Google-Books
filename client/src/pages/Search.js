@@ -22,24 +22,25 @@ class Search extends Component {
 
     handleFormSubmit = event => {
         event.preventDefault();
-        console.log(this.state.bookSearch);
         API.getBooks(this.state.bookSearch)
             .then(res => this.setState({ books: res.data }))
             .catch(err => console.log(err));
-        console.log(this.state.books);
+        this.setState({
+            bookSearch: ""
+        });
     };
 
     render() {
         return (
             <Container>
                 <Row>
-                    <div className="col rounded text-center bg-info m-4 p-4">
+                    <div className="col rounded text-center bg-info mt-4 p-4">
                         <h1>React Google Books Search</h1>
                         <h4>Search For and Save Books of Interest</h4>
                     </div>
                 </Row>
                 <Row>
-                    <div className="col rounded bg-light mb-4 mr-4 ml-4 mt-0 p-4">
+                    <div className="col rounded bg-light mb-4 mt-4 p-4">
                         <h4>Book Search</h4>
                         <form>
                             <div className="form-group">
@@ -71,7 +72,7 @@ class Search extends Component {
                                             title={book.volumeInfo.title}
                                             authors={book.volumeInfo.authors[0]}
                                             description={book.volumeInfo.description}
-                                            thumbnail={book.volumeInfo.imageLinks.smallThumbnail}
+                                            thumbnail={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.smallThumbnail : "https://placehold.it/128x197?text=No%20Preview"}
                                             href={book.volumeInfo.infoLink}
                                         />
                                     );
