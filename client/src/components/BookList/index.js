@@ -1,8 +1,11 @@
 import React from "react";
+import { Col, Row } from "../Grid";
 
 export function BookList({ children }) {
-    return <ul className="list-group">{children}</ul>
-}
+    return (
+        <ul className="list-group">{children}</ul> 
+    );
+};
 
 export function BookListItem({
     title,
@@ -13,15 +16,18 @@ export function BookListItem({
 }) {
     return (
         <li className="list-group-item">
-            <div>
-                <img src={thumbnail} alt={title} className="float-left pr-3 pb-3" />
-                <h3>{title}</h3>
-                <h5>by {authors}</h5>
-            </div>
-            <div>
-                <p>{description}</p>
-                <p className="text-right"><a href={href} target="_blank" rel="noopener noreferrer">More info</a></p>
-            </div>
+            <button className="float-right btn btn-success">Save</button>
+            <a className="float-right btn btn-primary ml-2 mr-2" href={href} target="_blank" rel="noopener noreferrer">View</a>
+            <h4>{title}</h4>
+            <h5>by {authors}</h5>
+            <Row>
+                <div class="col-auto">
+                    <img src={thumbnail} alt={title} />
+                </div>
+                <Col>
+                    <p>{description}</p>
+                </Col>
+            </Row>
         </li>
-    )
-}
+    );
+};
