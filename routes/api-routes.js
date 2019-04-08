@@ -2,9 +2,10 @@ const axios = require("axios");
 const router = require("express").Router();
 
 router.get("/books", (req, res) => {
+    console.log(req.query.q);
     axios
-        .get("GET https://www.googleapis.com/books/v1/volumes?q=", { params: req.query })
-        .then(({ data: { results } }) => res.json(results))
+        .get("https://www.googleapis.com/books/v1/volumes", { params: req.query })
+        .then(({ data: { items } }) => res.json(items))
         .catch(err => res.status(422).json(err));
 });
   
