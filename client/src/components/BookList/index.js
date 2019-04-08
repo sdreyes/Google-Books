@@ -8,16 +8,20 @@ export function BookListItem({
     title,
     authors,
     description,
-    thumbnail = "",
+    thumbnail,
     href
 }) {
     return (
         <li className="list-group-item">
-            <img src={thumbnail} alt={title} />
-            <h3>{title}</h3>
-            <h5>by {authors}</h5>
-            <p>{description}</p>
-            <p><a href={href}>More info</a></p>
+            <div>
+                <img src={thumbnail} alt={title} className="float-left pr-3 pb-3" />
+                <h3>{title}</h3>
+                <h5>by {authors}</h5>
+            </div>
+            <div>
+                <p>{description}</p>
+                <p className="text-right"><a href={href} target="_blank" rel="noopener noreferrer">More info</a></p>
+            </div>
         </li>
     )
 }
