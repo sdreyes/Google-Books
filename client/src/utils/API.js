@@ -5,12 +5,12 @@ export default {
     return axios.get("/api/books", { params: { q: query } });
   },
   getSavedBooks: function() {
-      return axios.get("/api/saved");
+      return axios.get("/api/savedBooks");
   },
   deleteSavedBook: function(id) {
-      return axios.delete(`/api/saved/${id}`);
+      return axios.delete(`/api/savedBooks/${id}`);
   },
   saveBook: function(bookData) {
-      return axios.post(`/api/saved${bookData}`);
+      return axios.post("/api/savedBooks", bookData);
   }
 };
