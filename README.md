@@ -1,4 +1,4 @@
-# google-books
+# Library Builder
 
 React Google Books is a MERN-stack app that allows users to search for books of interest! Books can be saved to and deleted from the 'favorites' list.
 
