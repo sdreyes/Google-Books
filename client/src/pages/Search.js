@@ -21,7 +21,7 @@ class Search extends Component {
       .then(res => {
         let userBooks = [];
         res.data.map(book => {
-          userBooks.push(book.href);
+          userBooks.push(book.googleId);
         });
         this.setState({ savedBooks: userBooks }, () => console.log(this.state.savedBooks))
       })
@@ -39,7 +39,7 @@ class Search extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     API.getBooks(this.state.bookSearch)
-      .then(res => this.setState({ books: res.data }))
+      .then(res => this.setState({ books: res.data }, () => console.log(res.data)))
       .catch(err => console.log(err));
     this.setState({
       bookSearch: ""
@@ -47,9 +47,17 @@ class Search extends Component {
 
   };
 
-  handleSave = (event, title, authors, description, href, thumbnail) => {
+  deleteSavedBook = (event, googleId) => {
+    event.preventDefault();
+    API.deleteSavedBook(googleId)
+      .then(res => this.loadSavedBooks())
+      .catch(err => console.log(err));
+  };
+
+  handleSave = (event, googleId, title, authors, description, href, thumbnail) => {
     event.preventDefault();
     API.saveBook({
+      googleId: googleId,
       title: title,
       authors: authors,
       description: description,
@@ -98,15 +106,18 @@ class Search extends Component {
                     return (
                       <BookListItem
                         key={book.volumeInfo.infoLink}
+                        googleId={book.id}
                         title={book.volumeInfo.title}
                         authors={Array.isArray(book.volumeInfo.authors) ? book.volumeInfo.authors : ["Unknown"]}
                         description={book.volumeInfo.description || "No description available"}
                         thumbnail={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.smallThumbnail : "https://placehold.it/128x197?text=No%20Preview"}
                         href={book.volumeInfo.infoLink}
-                        saved={this.state.savedBooks.indexOf(book.volumeInfo.infoLink) > -1
+                        saved={this.state.savedBooks.indexOf(book.id) > -1
                           ? true
                           : false}
-                        clickEvent={this.handleSave}
+                        clickEvent={this.state.savedBooks.indexOf(book.id) > -1
+                          ? this.deleteSavedBook
+                          : this.handleSave}
                       />
                     );
                   })}
