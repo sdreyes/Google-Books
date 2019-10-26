@@ -20,9 +20,9 @@ class Saved extends Component {
         this.setState({ savedBooks: res.data }))
   }
 
-  deleteSavedBook = (event, id) => {
+  deleteSavedBook = (event, googleId) => {
     event.preventDefault();
-    API.deleteSavedBook(id)
+    API.deleteSavedBook(googleId)
       .then(res => this.loadSavedBooks())
       .catch(err => console.log(err));
   };
@@ -46,8 +46,8 @@ class Saved extends Component {
                   {this.state.savedBooks.map(book => {
                     return (
                       <BookListItem
-                        key={book._id}
-                        id={book._id}
+                        key={book.googleId}
+                        googleId={book.googleId}
                         title={book.title}
                         authors={book.authors}
                         description={book.description}
