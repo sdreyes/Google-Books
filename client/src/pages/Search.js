@@ -9,11 +9,17 @@ class Search extends Component {
   state = {
     books: [],
     bookSearch: "",
-    savedBooks: []
+    savedBooks: [],
+    screenWidth: window.innerWidth
   };
 
   componentDidMount() {
     this.loadSavedBooks();
+    window.addEventListener('resize', this.updateDimensions);
+  }
+
+  updateDimensions = () => {
+    this.setState({screenWidth: window.innerWidth}, () => console.log(this.state.screenWidth))
   }
 
   loadSavedBooks = () => {
@@ -118,6 +124,7 @@ class Search extends Component {
                         clickEvent={this.state.savedBooks.indexOf(book.id) > -1
                           ? this.deleteSavedBook
                           : this.handleSave}
+                        screenWidth={this.state.screenWidth}
                       />
                     );
                   })}
