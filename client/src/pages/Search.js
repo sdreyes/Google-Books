@@ -39,7 +39,7 @@ class Search extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     API.getBooks(this.state.bookSearch)
-      .then(res => this.setState({ books: res.data }))
+      .then(res => this.setState({ books: res.data }, () => console.log(res.data)))
       .catch(err => console.log(err));
     this.setState({
       bookSearch: ""
@@ -72,8 +72,8 @@ class Search extends Component {
       <Container>
         <Row>
           <div className="col rounded text-center bg-info mt-4 p-4">
-            <h1>React Google Books Search</h1>
-            <h4>Search For and Save Books of Interest</h4>
+            <h1>Library Builder</h1>
+            <h4>Search for and save books of interest!</h4>
           </div>
         </Row>
         <Row>
@@ -96,7 +96,7 @@ class Search extends Component {
           </div>
         </Row>
         <Row>
-          <div className="col border border-rounded p-4">
+          <div className="col border border-rounded p-3 mb-4">
             <h4>Results</h4>
             {!this.state.books.length ? (
               <h6 className="text-center">No books to display currently</h6>
