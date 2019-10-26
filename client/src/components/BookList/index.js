@@ -38,8 +38,8 @@ export function BookListItem({
       <h4>{title}</h4>
       <h5>by {authors.length > 1 ? (authors.reduce((prev, curr) => [prev, ", ", curr])) : authors[0]}</h5>
       <Row>
-        <div className="col-sm-12 col-md-auto">
-          <img src={thumbnail} alt={title} class=" text-center w-100" />
+        <div className="col-sm-12 col-md-auto text-center">
+          <img src={thumbnail} alt={title} className="mt-1 mb-2" />
         </div>
         <Col>
           <p>{description}</p>
