@@ -18,7 +18,7 @@ export function BookListItem({
   saved
 }) {
   return (
-    <li className="list-group-item">
+    <li className="list-group-item m-2">
       {!saved ? (
         <button
           className="float-right btn btn-success" 
