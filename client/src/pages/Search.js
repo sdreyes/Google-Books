@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Col, Row, Container } from "../components/Grid";
+import { Row, Container } from "../components/Grid";
 import Button from "../components/Button";
 import { BookList, BookListItem } from "../components/BookList";
 import API from "../utils/API";
@@ -21,9 +21,9 @@ class Search extends Component {
       .then(res => {
         let userBooks = [];
         res.data.map(book => {
-          userBooks.push(book.googleId);
+          return userBooks.push(book.googleId);
         });
-        this.setState({ savedBooks: userBooks }, () => console.log(this.state.savedBooks))
+        this.setState({ savedBooks: userBooks })
       })
   }
 
@@ -39,7 +39,7 @@ class Search extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     API.getBooks(this.state.bookSearch)
-      .then(res => this.setState({ books: res.data }, () => console.log(res.data)))
+      .then(res => this.setState({ books: res.data }))
       .catch(err => console.log(err));
     this.setState({
       bookSearch: ""
