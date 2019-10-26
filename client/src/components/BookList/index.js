@@ -15,28 +15,55 @@ export function BookListItem({
   thumbnail,
   href,
   clickEvent,
-  saved
+  saved,
+  screenWidth
 }) {
   return (
     <li className="list-group-item m-2">
-      {!saved ? (
-        <button
-          className="float-right btn btn-success" 
-          onClick={event => clickEvent(event, googleId, title, authors, description, href, thumbnail)}>Save</button>
-      ) : (
-          <button className="float-right btn btn-danger" onClick={event => clickEvent(event, googleId)}>Unsave</button>
-        )}
-      <a className="float-right btn btn-primary ml-2 mr-2" href={href} target="_blank" rel="noopener noreferrer">View</a>
+
+      {screenWidth >= 768 &&
+        <div class="float-right">
+          {!saved ? (
+            <button
+              className="btn btn-success"
+              onClick={event => clickEvent(event, googleId, title, authors, description, href, thumbnail)}>Save</button>
+          ) : (
+              <button className="btn btn-danger" onClick={event => clickEvent(event, googleId)}>Unsave</button>
+            )
+          }
+          <a className="btn btn-primary ml-2 mr-2" href={href} target="_blank" rel="noopener noreferrer">View</a>
+        </div>
+      }
+
       <h4>{title}</h4>
       <h5>by {authors.length > 1 ? (authors.reduce((prev, curr) => [prev, ", ", curr])) : authors[0]}</h5>
       <Row>
-        <div className="col-auto">
-          <img src={thumbnail} alt={title} />
+        <div className="col-sm-12 col-md-auto">
+          <img src={thumbnail} alt={title} class=" text-center w-100" />
         </div>
         <Col>
           <p>{description}</p>
         </Col>
       </Row>
+
+      {screenWidth < 768 &&
+        <div className="row">
+          <Col>
+          {!saved ? (
+            <button
+              className="btn btn-success btn-block"
+              onClick={event => clickEvent(event, googleId, title, authors, description, href, thumbnail)}>Save</button>
+          ) : (
+              <button className="btn btn-danger btn-block" onClick={event => clickEvent(event, googleId)}>Unsave</button>
+            )
+          }
+          </Col>
+          <Col>
+            <a className="btn btn-primary btn-block" href={href} target="_blank" rel="noopener noreferrer">View</a>
+          </Col>
+        </div>
+      }
+
     </li>
   );
 };
