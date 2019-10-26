@@ -10,7 +10,8 @@ class Search extends Component {
     books: [],
     bookSearch: "",
     savedBooks: [],
-    screenWidth: window.innerWidth
+    screenWidth: window.innerWidth,
+    searched: ""
   };
 
   componentDidMount() {
@@ -44,6 +45,9 @@ class Search extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
+    this.setState({
+      searched: this.state.bookSearch
+    });
     API.getBooks(this.state.bookSearch)
       .then(res => this.setState({ books: res.data }, () => console.log(res.data)))
       .catch(err => console.log(err));
@@ -103,7 +107,11 @@ class Search extends Component {
         </Row>
         <Row>
           <div className="col border border-rounded p-3 mb-4">
+            {this.state.searched === "" ? (
             <h4>Results</h4>
+            ) : (
+              <h4>Results for {this.state.searched}</h4>
+            )}
             {!this.state.books.length ? (
               <h6 className="text-center">No books to display currently</h6>
             ) : (
