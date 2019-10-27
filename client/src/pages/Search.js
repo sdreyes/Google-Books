@@ -124,7 +124,7 @@ class Search extends Component {
                         title={book.volumeInfo.title}
                         authors={Array.isArray(book.volumeInfo.authors) ? book.volumeInfo.authors : ["Unknown"]}
                         description={book.volumeInfo.description || "No description available"}
-                        thumbnail={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.smallThumbnail : "https://placehold.it/128x197?text=No%20Preview"}
+                        thumbnail={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.smallThumbnail : "img/placeholder.png"}
                         href={book.volumeInfo.infoLink}
                         saved={this.state.savedBooks.indexOf(book.id) > -1
                           ? true
