@@ -22,7 +22,7 @@ export function BookListItem({
     <li className="list-group-item m-2">
 
       {screenWidth >= 768 &&
-        <div class="float-right">
+        <div className="float-right">
           {!saved ? (
             <button
               className="btn btn-success"
@@ -35,14 +35,14 @@ export function BookListItem({
         </div>
       }
 
-      <h4>{title}</h4>
+      <h4 className="font-weight-bold">{title}</h4>
       <h5>by {authors.length > 1 ? (authors.reduce((prev, curr) => [prev, ", ", curr])) : authors[0]}</h5>
       <Row>
         <div className="col-sm-12 col-md-auto text-center">
           <img src={thumbnail} alt={title} className="mt-1 mb-2" />
         </div>
         <Col>
-          <p>{description}</p>
+          <p className={screenWidth < 768 ? "text-justify" : ""}>{description}</p>
         </Col>
       </Row>
 
