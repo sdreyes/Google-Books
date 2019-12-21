@@ -19,7 +19,7 @@ export function BookListItem({
   saved,
   screenWidth
 }) {
-  console.log(date);
+  console.log(saved);
   return (
     <li className="list-group-item m-2">
 

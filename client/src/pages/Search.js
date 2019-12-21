@@ -19,24 +19,33 @@ class Search extends Component {
     window.addEventListener('resize', this.updateDimensions);
   }
 
+  checkIfSaved = googleId => {
+    // Cannot use a forEach here because a return statement won't break the loop
+    for (let i in this.state.savedBooks) {
+      if (this.state.savedBooks[i].googleId === googleId) return true;
+    }
+    return false;
+  }
+
+  checkSavedDate = googleId => {
+    for (let i in this.state.savedBooks) {
+      if (this.state.savedBooks[i].googleId === googleId) return API.getDate(this.state.savedBooks[i]._id);
+    }
+    return null;
+  }
+
   updateDimensions = () => {
-    this.setState({screenWidth: window.innerWidth}, () => console.log(this.state.screenWidth))
+    this.setState({screenWidth: window.innerWidth});
   }
 
   loadSavedBooks = () => {
     API.getSavedBooks()
       .then(res => {
-        let userBooks = [];
-        res.data.map(book => {
-          return userBooks.push(book.googleId);
-        });
-        this.setState({ savedBooks: userBooks })
+        this.setState({ savedBooks: res.data });
       })
   }
 
   handleInputChange = event => {
-    // Destructure the name and value properties off of event.target
-    // Update the appropriate state
     const { name, value } = event.target;
     this.setState({
       [name]: value
@@ -46,15 +55,12 @@ class Search extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     this.setState({
-      searched: this.state.bookSearch
+      searched: this.state.bookSearch,
+      bookSearch: ""
     });
     API.getBooks(this.state.bookSearch)
       .then(res => this.setState({ books: res.data }, () => console.log(res.data)))
       .catch(err => console.log(err));
-    this.setState({
-      bookSearch: ""
-    });
-
   };
 
   deleteSavedBook = (event, googleId) => {
@@ -66,14 +72,7 @@ class Search extends Component {
 
   handleSave = (event, googleId, title, authors, description, href, thumbnail) => {
     event.preventDefault();
-    API.saveBook({
-      googleId: googleId,
-      title: title,
-      authors: authors,
-      description: description,
-      href: href,
-      thumbnail: thumbnail
-    })
+    API.saveBook({ googleId, title, authors, description, href, thumbnail })
       .then(res => this.loadSavedBooks());
   };
 
@@ -126,12 +125,11 @@ class Search extends Component {
                         description={book.volumeInfo.description || "No description available"}
                         thumbnail={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.smallThumbnail : "img/placeholder.png"}
                         href={book.volumeInfo.infoLink}
-                        saved={this.state.savedBooks.indexOf(book.id) > -1
-                          ? true
-                          : false}
-                        clickEvent={this.state.savedBooks.indexOf(book.id) > -1
+                        saved={this.checkIfSaved(book.id)}
+                        clickEvent={this.checkIfSaved(book.id)
                           ? this.deleteSavedBook
                           : this.handleSave}
+                        date={this.checkSavedDate(book.id)}
                         screenWidth={this.state.screenWidth}
                       />
                     );
