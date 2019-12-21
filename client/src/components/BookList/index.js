@@ -14,10 +14,12 @@ export function BookListItem({
   description,
   thumbnail,
   href,
+  date,
   clickEvent,
   saved,
   screenWidth
 }) {
+  console.log(date);
   return (
     <li className="list-group-item m-2">
 
@@ -60,6 +62,13 @@ export function BookListItem({
           </Col>
           <Col>
             <a className="btn btn-primary btn-block" href={href} target="_blank" rel="noopener noreferrer">View</a>
+          </Col>
+        </div>
+      }
+      {saved &&
+        <div className="row">
+          <Col>
+            <small className="text-right">Saved on {date}</small>
           </Col>
         </div>
       }
