@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Row, Container } from "../components/Grid";
 import { BookList, BookListItem } from "../components/BookList";
 import API from "../utils/API";
+import moment from "moment";
 
 class Saved extends Component {
 
@@ -32,6 +33,12 @@ class Saved extends Component {
       .catch(err => console.log(err));
   };
 
+  getDate = id => {
+    let timestamp = id.toString().substring(0, 8)
+    let date = new Date(parseInt(timestamp, 16) * 1000)
+    return (moment(date).format("MMM D, YYYY @ h:mma"));
+  };
+
   render() {
     return (
       <Container>
@@ -57,6 +64,7 @@ class Saved extends Component {
                         description={book.description}
                         thumbnail={book.thumbnail}
                         href={book.href}
+                        date={this.getDate(book._id)}
                         saved={true}
                         clickEvent={this.deleteSavedBook}
                         screenWidth={this.state.screenWidth}
